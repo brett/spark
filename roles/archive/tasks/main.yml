@@ -4,7 +4,7 @@
     name:
       - zip
       - unzip
-      - p7zip
+      - 7zip
     state: present
   tags:
     - zip
@@ -44,14 +44,6 @@
   tags:
     - lesspipe
 
-- name: Install geteltorito
-  aur:
-    name: geteltorito
-    user: "{{ user.name }}"
-  tags:
-    - aur
-    - geteltorito
-
 - name: Install pigz
   pacman:
     name: pigz
@@ -60,9 +52,10 @@
     - pigz
 
 - name: Install ventoy
-  aur:
+  kewlfft.aur.aur:
     name: ventoy-bin
-    user: "{{ user.name }}"
+  become: yes
+  become_user: "{{ aur.user }}"
   tags:
     - aur
     - ventoy

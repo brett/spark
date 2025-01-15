@@ -23,10 +23,16 @@
 - name: Install xautomation
   pacman: name=xautomation state=present
 
+- name: Install xcalib
+  pacman:
+    name: xcalib
+    state: present
+
 - name: Install video driver(s)
   pacman:
     name: "{{ video_drivers }}"
     state: present
+  when: video_drivers is defined
 
 - name: Add user to video group
   user: name={{ user.name }} groups=video append=yes
@@ -48,5 +54,4 @@
 - include_tasks: sxhkd.yml
 - include_tasks: unclutter.yml
 - include_tasks: autorandr.yml
-- include_tasks: autocutsel.yml
 - include_tasks: xdg.yml

@@ -7,7 +7,7 @@
     - { role: gnupg, tags: ['gnupg'] }
     - { role: sysmon, tags: ['sysmon'] }
     - { role: cron, tags: ['cron'] }
-    - { role: microcode, tags: ['microcode'], when: "'GenuineIntel' in ansible_processor" }
+    - { role: microcode, tags: ['microcode'] }
     - { role: hardened, tags: ['hardened'] }
     - { role: ssh, tags: ['ssh'] }
     - { role: dotfiles, tags: ['dotfiles'] }
@@ -23,6 +23,7 @@
     - { role: pass, tags: ['pass'] }
     - { role: iptables, tags: ['iptables'] }
     - { role: nettools, tags: ['nettools'] }
+    - { role: regdomain, tags: ['regdomain'], when: "regdomain is defined" }
     - { role: openvpn, tags: ['openvpn'] }
     - { role: nmtrust, tags: ['nmtrust'] }
     - { role: unbound, tags: ['unbound'] }
@@ -69,7 +70,6 @@
     - { role: mapping, tags: ['mapping'] }
     - { role: sound, tags: ['sound'] }
     - { role: pim, tags: ['pim'] }
-    - { role: radio, tags: ['radio'] }
     - { role: postgresql, tags: ['postgresql'] }
     - { role: calibre, tags: ['calibre'] }
     - { role: aws, tags: ['aws'] }

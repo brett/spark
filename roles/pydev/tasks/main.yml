@@ -9,14 +9,9 @@
       name: pyenv
       state: present
 
-- name: Install pipx
+- name: Install ruff
   pacman:
-      name: python-pipx
-      state: present
-
-- name: Install black
-  pacman:
-      name: python-black
+      name: ruff
       state: present
 
 - name: Install uv
