@@ -6,7 +6,7 @@ BAT=$(echo /sys/class/power_supply/BAT*)
 BAT_STATUS="$BAT/status"
 BAT_CAP="$BAT/capacity"
 AC_STATUS=/sys/class/power_supply/ACAD/online
-LOW_BAT_PERCENT=50
+LOW_BAT_PERCENT=70
 
 AC_PROFILE="desktop"
 BAT_PROFILE="balanced"
@@ -16,7 +16,7 @@ LOW_BAT_PROFILE="laptop-battery-powersave"
 [[ -z $STARTUP_WAIT ]] || sleep "$STARTUP_WAIT"
 
 # start the monitor loop
-prev=0
+prev=$(tuned-adm active | tr -s ' ' | cut -d' ' -f4)
 
 while true; do
     # read the current state
@@ -39,6 +39,5 @@ while true; do
 
     prev=$profile
 
-    # wait for the next power change event
-    inotifywait -qq "$AC_STATUS" "$BAT_CAP"
+    sleep 10s
 done

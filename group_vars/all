@@ -52,6 +52,7 @@ mail:
 
 network:
     conn_check: False
+    wifi_wired_exclusive: True
     trusted_uuid:
        - 40ad5ce3-a119-4762-aea7-e3a8eb4de7da
        - 08579418-09e4-4f58-b9e4-ae9622e18df9
@@ -320,3 +321,9 @@ kernel_parameters: "quiet consoleblank=60"
 power_management: "tlp"
 
 regdomain: "US"
+
+illuminanced:
+    max_backlight_file: /sys/class/backlight/amdgpu_bl1/max_brightness
+    backlight_file: /sys/class/backlight/amdgpu_bl1/brightness
+    illuminance_file: /sys/bus/iio/devices/iio:device0/in_illuminance_raw
+    min_backlight: 60
