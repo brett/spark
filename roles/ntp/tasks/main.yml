@@ -1,20 +1,24 @@
 ---
 - name: Install chrony
-  pacman: name=chrony state=present
-
-- name: Install chrony networkmanager dispatcher
-  kewlfft.aur.aur:
-    name: networkmanager-dispatcher-chrony
-  become: yes
-  become_user: "{{ aur.user }}"
-  tags:
-    - aur
-    - networkmanager
+  pacman:
+    name: chrony
+    state: present
 
 - name: Push chrony configuration file
-  copy: src=chrony.conf dest=/etc/chrony.conf
+  copy:
+    src: chrony.conf
+    dest: /etc/chrony.conf
   notify:
     - restart chrony
 
 - name: Enable and start chrony
-  service: name=chronyd.service enabled=yes state=started
+  service:
+    name: chronyd.service
+    enabled: yes
+    state: started
+
+- name: Push chrony NetworkManager dispatcher
+  copy:
+    src: chrony-dispatcher.sh
+    dest: /etc/NetworkManager/dispatcher.d/70-chrony
+    mode: 0755
