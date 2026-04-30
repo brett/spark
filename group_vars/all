@@ -60,6 +60,15 @@ network:
        - 3fc4e571-24b9-40ff-9138-90d036aad90b
        - 1be42e4c-cc30-428e-a733-ea6e712b8679
        - 481dcb00-1a50-4f03-9253-db1c3305ba64
+    excluded_networks:
+        # Docker
+        - docker*
+        - br-*
+        # libvirt
+        - virbr*
+        - vnet*
+        # Migrant
+        - mg-wg-*
 
 editors:
     - gvim
@@ -162,6 +171,7 @@ firejail:
     blacklist:
         - ~/.calendars
         - ~/.config/vdirsyncer
+        - ~/.config/pimsync
         - ~/.contacts
         - ~/.keys
         - ~/.mbsyncrc
@@ -202,12 +212,6 @@ udisks:
 
 hostsctl:
     url: https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
-
-himawaripy:
-    run_time: 15min
-    run_boot_delay: 2min
-    run_on: never
-    flags: --auto-offset --level 4
 
 goesimage:
     run_time: 15min

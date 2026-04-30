@@ -3,28 +3,14 @@
   kewlfft.aur.aur:
     name: units
     use: makepkg
-    skip_pgp_check: yes
-  become: yes
+    skip_pgp_check: true
+  become: true
   become_user: "{{ aur.user }}"
   tags:
     - aur
 
-- name: Push GNU Units currency update service file
-  template:
-    src: units_cur.service.j2
-    dest: /etc/systemd/system/units_cur.service
-  notify:
-    - reload systemd config
-
-- name: Push GNU Units currency update timer file
-  template:
-    src: units_cur.timer.j2
-    dest: /etc/systemd/system/units_cur.timer
-  notify:
-    - reload systemd config
-    - restart units_cur
-
-- include_tasks: roles/nmtrust/tasks/unit.yml
+- name: Include nmtrust unit tasks
+  ansible.builtin.include_tasks: roles/nmtrust/tasks/unit.yml
   vars:
-      unit: units_cur.timer
-      run_on: "{{ units.run_on }}"
+    unit: units_currency.timer
+    run_on: "{{ units.run_on }}"

@@ -1,0 +1,37 @@
+---
+- name: Install libvirt
+  community.general.pacman:
+    name:
+      - libvirt
+      - virt-install
+    state: present
+
+- name: Install qemu-base
+  community.general.pacman:
+    name: qemu-base
+    state: present
+
+- name: Install dnsmasq
+  community.general.pacman:
+    name: dnsmasq
+    state: present
+
+- name: Enable libvirtd.socket
+  ansible.builtin.systemd:
+    name: libvirtd.socket
+    enabled: true
+    state: started
+
+- name: Enable virtlogd.socket
+  ansible.builtin.systemd:
+    name: virtlogd.socket
+    enabled: true
+    state: started
+
+- name: Add the user to libvirt group
+  ansible.builtin.user:
+    name: "{{ user.name }}"
+    groups: libvirt
+    append: true
+  tags:
+    - user
