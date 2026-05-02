@@ -104,6 +104,7 @@ base_packages:
     - termdown
     - fzf
     - vivid
+    - restic
 
 filesystem_packages:
     - dosfstools
