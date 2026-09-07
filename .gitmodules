@@ -1,6 +1,9 @@
 [submodule "roles/backitup/files/backitup"]
 	path = roles/backitup/files/backitup
 	url = https://github.com/pigmonkey/backitup
-[submodule "roles/cryptshot/files/cryptshot"]
-	path = roles/cryptshot/files/cryptshot
-	url = https://github.com/pigmonkey/cryptshot
+[submodule "roles/resnap/files/resnap"]
+	path = roles/resnap/files/resnap
+	url = https://github.com/pigmonkey/resnap
+[submodule "roles/restash/files/restash"]
+	path = roles/restash/files/restash
+	url = https://github.com/pigmonkey/restash/

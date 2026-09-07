@@ -18,9 +18,7 @@
     - { role: x, tags: ["x"] }
     - { role: terminal, tags: ["terminal"], when: "terminal is defined" }
     - { role: lightdm, tags: ["lightdm"], when: "display_manager == 'lightdm'" }
-    - { role: gdm, tags: ["gdm"], when: "display_manager == 'gdm'" }
     - { role: i3, tags: ["i3"], when: "desktop_environment == 'i3'" }
-    - { role: gnome, tags: ["gnome"], when: "desktop_environment == 'gnome'" }
     - { role: pass, tags: ["pass"] }
     - { role: iptables, tags: ["iptables"] }
     - { role: nettools, tags: ["nettools"] }
@@ -42,6 +40,7 @@
     - { role: browsers, tags: ["browsers"] }
     - { role: yubikey, tags: ["yubikey"] }
     - { role: media, tags: ["media"] }
+    - { role: obs, tags: ["obs"] }
     - { role: mpd, tags: ["mpd"] }
     - { role: mpv, tags: ["mpv"] }
     - { role: laptop, tags: ["laptop"] }
@@ -65,9 +64,8 @@
     - { role: libvirt, tags: ["libvirt"] }
     - { role: virtualbox, tags: ["virtualbox"] }
     - { role: backitup, tags: ["backitup"] }
-    - { role: cryptshot, tags: ["cryptshot"], when: "cryptshot is defined" }
-    - { role: borg, tags: ["borg"] }
-    - { role: tarsnap, tags: ["tarsnap"] }
+    - { role: resnap, tags: ["resnap"], when: "resnap is defined" }
+    - { role: restash, tags: ["restash"], when: "restash is defined" }
     - { role: mapping, tags: ["mapping"] }
     - { role: sound, tags: ["sound"] }
     - { role: pim, tags: ["pim"] }
@@ -97,6 +95,7 @@
     - { role: oomd, tags: ["oomd"] }
     - { role: f3, tags: ["f3"] }
     - { role: vopono, tags: ["vopono"] }
+    - { role: colors, tags: ["colors"] }
   vars_prompt:
     - name: user_password
       prompt: "Enter desired user password"
