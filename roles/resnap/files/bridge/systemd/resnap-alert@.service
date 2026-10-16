@@ -1,0 +1,6 @@
+[Unit]
+Description=Alert: resnap backup to the %i drive failed
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/resnap-alert "resnap backup to %i FAILED" "The nightly restic backup to the %i drive failed. See: journalctl -u resnap@%i"

@@ -1,0 +1,20 @@
+#!/bin/bash
+# Alert Brett about a resnap problem: the fleet ntfy topic (reaches the
+# phone; tailnet-only, so silently skipped when off it) and a critical
+# desktop notification in the logged-in session. Never fails: an alerting
+# problem must not mask the original failure in the journal.
+# Usage: resnap-alert <title> <message>
+set -u
+title="obsidian: ${1:-resnap}"
+msg="${2:-see journalctl -u 'resnap@*'}"
+user=brett
+uid=$(id -u "$user" 2>/dev/null || echo 1000)
+
+logger -t resnap -p user.err "ALERT: $title: $msg"
+curl -fsS -m 15 -H "Title: $title" -H "Tags: warning" -d "$msg" \
+    http://100.64.0.5:2586/fleet > /dev/null 2>&1 || true
+if [ -S "/run/user/$uid/bus" ]; then
+    runuser -u "$user" -- env DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$uid/bus" \
+        notify-send -u critical -a resnap "$title" "$msg" > /dev/null 2>&1 || true
+fi
+exit 0

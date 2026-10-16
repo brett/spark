@@ -1,0 +1,28 @@
+#!/bin/bash
+# Daily freshness check: alert for every configured drive whose last
+# successful resnap run is older than MAX_AGE_DAYS, or that has never
+# succeeded. This is the alarm for "the drive was never plugged in", which
+# skipped runs alone would never raise (darkstar went 15 months stale).
+set -u
+MAX_AGE_DAYS="${MAX_AGE_DAYS:-3}"
+drives=/usr/local/etc/resnap/drives
+state=/var/lib/resnap
+now=$(date +%s)
+stale=()
+while read -r name _; do
+    case "$name" in ''|'#'*) continue ;; esac
+    marker="$state/$name.ok"
+    if [ ! -e "$marker" ]; then
+        stale+=("$name: no successful backup yet")
+        continue
+    fi
+    age=$(( (now - $(stat -c %Y "$marker")) / 86400 ))
+    if [ "$age" -ge "$MAX_AGE_DAYS" ]; then
+        stale+=("$name: last good backup $age days ago ($(date -d "@$(stat -c %Y "$marker")" +%F))")
+    fi
+done < "$drives"
+if [ "${#stale[@]}" -gt 0 ]; then
+    msg=$(printf '%s; ' "${stale[@]}")
+    /usr/local/bin/resnap-alert "resnap backups are stale" "${msg%; }. Plug the drive in, or check journalctl -u 'resnap@*'."
+fi
+exit 0

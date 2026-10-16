@@ -1,0 +1,16 @@
+[Unit]
+Description=resnap: restic backup of obsidian to the %i drive
+Documentation=file:/usr/local/share/doc/resnap/README.md
+OnFailure=resnap-alert@%i.service
+
+[Service]
+Type=oneshot
+# Skips (does not fail) when the drive is not plugged in.
+ExecCondition=/usr/local/bin/resnap-present %i
+ExecStart=/usr/local/bin/resnap default %i
+# Freshness marker for resnap-stale; ExecStartPost runs only on success.
+ExecStartPost=/usr/bin/touch /var/lib/resnap/%i.ok
+StateDirectory=resnap
+Nice=10
+IOSchedulingClass=idle
+TimeoutStartSec=infinity

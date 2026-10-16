@@ -1,0 +1,7 @@
+[Unit]
+Description=resnap: alert on drives without a recent successful backup
+
+[Service]
+Type=oneshot
+Environment=MAX_AGE_DAYS=3
+ExecStart=/usr/local/bin/resnap-stale

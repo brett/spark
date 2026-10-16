@@ -1,0 +1,24 @@
+# resnap excludes for obsidian (the bridge until the laptop moves to NixOS).
+# Deploy to /usr/local/etc/resnap/excludes. restic exclude syntax.
+# --one-file-system already skips /proc, /sys, /dev, /run, /mnt, /media and
+# /efi (the only other filesystem); /, /home and /nix are one ext4 volume.
+
+# resnap's defaults
+/tmp
+/var/cache
+/var/lib/pacman/sync
+/var/lib/docker
+/var/lib/dhcpcd
+/lost+found
+/swapfile
+
+# Reinstallable: Nix's store (~174 GB) and per-user caches.
+/nix/store
+/home/*/.cache
+/root/.cache
+
+# git-annex content: each annex already keeps its own copies (numcopies),
+# including on the drives themselves and on vesper. Backing it up again
+# here would store ~480 GB twice per drive. The annexes' .git (history,
+# location logs, encryption keys) is still backed up.
+/home/*/**/.git/annex/objects

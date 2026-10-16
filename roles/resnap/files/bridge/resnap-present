@@ -1,0 +1,18 @@
+#!/bin/bash
+# ExecCondition for resnap@<drive>.service: run only when that drive is
+# plugged in. Exit 0 = present (run); exit 1 = absent (systemd SKIPS the
+# run, it does not fail it, so travelling without the drive is not an
+# alarm; resnap-stale catches a drive that stays away too long). A drive
+# name missing from the drives file is a configuration error: exit 255,
+# which systemd treats as a failure, so it alerts.
+set -u
+name="${1:?drive name}"
+drives=/usr/local/etc/resnap/drives
+uuid=$(awk -v n="$name" '$1 == n && $1 !~ /^#/ { print $2; exit }' "$drives" 2>/dev/null)
+if [ -z "$uuid" ]; then
+    echo "resnap-present: drive '$name' is not in $drives" >&2
+    exit 255
+fi
+[ -e "/dev/disk/by-uuid/$uuid" ] && exit 0
+echo "resnap-present: $name ($uuid) is not plugged in; skipping"
+exit 1
