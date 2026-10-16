@@ -22,3 +22,43 @@
 # here would store ~480 GB twice per drive. The annexes' .git (history,
 # location logs, encryption keys) is still backed up.
 /home/*/**/.git/annex/objects
+
+# git-annex scratch: partial/encrypted transfer chunks, quarantined bad
+# copies, temp files. Never needed for a restore (2026-10-16).
+/home/*/**/.git/annex/tmp
+/home/*/**/.git/annex/transfer
+/home/*/**/.git/annex/bad
+/home/*/**/.git/annex/misctmp
+
+# Re-downloadable package/tool caches (2026-10-16; ~34 GB). Not program state.
+/home/*/.bun
+/home/*/.npm
+/home/*/.cargo/git
+/home/*/.cargo/registry
+/home/*/go/pkg
+/home/*/.local/share/uv
+/home/*/.local/share/pipxu
+/home/*/.local/share/pnpm
+/home/*/.vagrant.d/boxes
+
+# Browser/Electron caches inside the ~/.env app sandboxes (2026-10-16; ~12 GB).
+# Profiles, logins and settings in those sandboxes ARE backed up.
+/home/*/.env/**/Cache
+/home/*/.env/**/Code Cache
+/home/*/.env/**/GPUCache
+/home/*/.env/**/CacheStorage
+/home/*/.env/**/ShaderCache
+/home/*/.env/**/GrShaderCache
+/home/*/.env/**/DawnCache
+/home/*/.env/**/cache2
+/home/*/.env/**/.cache
+
+# Chrome/Chromium components it re-downloads itself (2026-10-16): the
+# on-device AI model (~4 GB per profile dir) and friends. Anywhere in home.
+/home/*/**/OptGuideOnDeviceModel
+/home/*/**/OptGuideOnDeviceClassifierModel
+/home/*/**/optimization_guide_model_store
+/home/*/**/screen_ai
+/home/*/**/component_crx_cache
+/home/*/**/WasmTtsEngine
+/home/*/**/GPUPersistentCache
