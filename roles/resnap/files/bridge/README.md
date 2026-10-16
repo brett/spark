@@ -21,3 +21,8 @@ Drives must be plain ext4: resnap mounts `/dev/disk/by-uuid/<fs-uuid>` at
 On NixOS, a `services.restic.backups.<drive>` module should take over the SAME
 repos, password, excludes, `check.subset` and `recover/` layout, so the
 snapshot history carries over and nothing on the drives changes.
+
+**Run manual backups through the unit**, `sudo systemctl start resnap@<drive>`
+(follow with `journalctl -fu resnap@<drive>`), not a bare `sudo resnap`: only
+the unit records the success marker that `resnap-stale` reads, so a bare run
+works but still triggers a "no successful backup" alert (2026-10-16).
