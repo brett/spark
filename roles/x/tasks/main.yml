@@ -84,3 +84,7 @@
   ansible.builtin.include_tasks: autorandr.yml
 - name: Include XDG tasks
   ansible.builtin.include_tasks: xdg.yml
+- name: Include ICC tasks
+  ansible.builtin.include_tasks: icc.yml
+  tags:
+    - icc

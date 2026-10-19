@@ -1,0 +1,45 @@
+---
+# Framework color profiles from Notebookcheck:
+#   https://www.notebookcheck.net/Framework-Laptop-13-5-Core-Ultra-7-review-New-2-8K-120-Hz-display-with-Arc-8-graphics.874187.0.html
+#   https://www.notebookcheck.net/Framework-Laptop-13-Pro-review-The-king-of-repairability-is-back.1351246.0.html#c16706728
+- name: Push ICC color profiles
+  ansible.builtin.copy:
+    src: icc/
+    dest: /usr/local/share/color/icc/
+    mode: "0644"
+  tags:
+    - icc
+
+- name: Identify internal panel
+  ansible.builtin.script: panel-id.py
+  args:
+    executable: python3
+  register: x_panel
+  changed_when: false
+  check_mode: false
+  tags:
+    - icc
+
+- name: Set panel ICC color profile path
+  ansible.builtin.set_fact:
+    x_icc_path: "/usr/local/share/color/icc/{{ x_panel.stdout | trim }}.icm"
+  tags:
+    - icc
+
+- name: Check for panel ICC color profile
+  ansible.builtin.stat:
+    path: "{{ x_icc_path }}"
+  register: x_icc
+  tags:
+    - icc
+
+- name: Load panel ICC color profile
+  ansible.builtin.lineinfile:
+    path: /etc/xprofile
+    regexp: "^xcalib "
+    line: "xcalib {{ x_icc_path }}"
+    state: "{{ 'present' if x_panel.stdout | trim and x_icc.stat.exists else 'absent' }}"
+    create: true
+    mode: "0644"
+  tags:
+    - icc

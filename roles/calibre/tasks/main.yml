@@ -22,7 +22,9 @@
 
 - name: Install libgourou
   kewlfft.aur.aur:
-    name: gourou
+    name:
+      - updfparser-git
+      - libgourou-utils
   become: true
   become_user: "{{ aur.user }}"
   tags:
