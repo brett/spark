@@ -58,6 +58,10 @@ network:
        - 3fc4e571-24b9-40ff-9138-90d036aad90b
        - 1be42e4c-cc30-428e-a733-ea6e712b8679
        - 481dcb00-1a50-4f03-9253-db1c3305ba64
+       # atari
+       - 5f8afe72-7af8-4311-896c-70f05824aa4e
+       # photon
+       - bf75f711-1ace-4b43-8958-049d675b7201
     excluded_networks:
         # Docker
         - docker*
