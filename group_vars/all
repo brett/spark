@@ -204,12 +204,14 @@ cryptshot:
 
 resnap:
     exclude_user_cache: True
+    # resnap mounts the FILESYSTEM uuid directly and has no LUKS support, so
+    # only drives already converted to plain ext4 belong here (enki-u029).
+    # darkstar was converted in enki-fjq0. trinity is still LUKS (container
+    # b9bd2322-034b-46a6-9f9a-9da36d82b0d2) and joins with its new ext4 uuid
+    # when it is converted (enki-y348).
     drives:
         - name: darkstar
-          uuid: a2cc4cc2-1bed-40c6-9132-49231f9a8b28
-
-        - name: trinity
-          uuid: b9bd2322-034b-46a6-9f9a-9da36d82b0d2
+          uuid: 4155d0f8-fc0b-4a7f-9f15-298160b4bcb3
 
 
 journal:
