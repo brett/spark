@@ -67,6 +67,8 @@ network:
         - vnet*
         # Migrant
         - mg-wg-*
+        # Tailscale is up on every network, so it says nothing about where we are
+        - tailscale0
 
 editors:
     - gvim
